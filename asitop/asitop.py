@@ -32,7 +32,7 @@ def main():
     gpu_gauge = HGauge(title="GPU Usage", val=0, color=args.color)
     ane_gauge = HGauge(title="ANE", val=0, color=args.color)
     # Add code to display thermal_pressure
-    thermal_pressure_gauge = HGauge(title=f"Thermal Pressure: {thermal_pressure}", val=0, color=args.color)
+    thermal_pressure_gauge = HGauge(title="Thermal Pressure: Loading...", val=0, color=args.color)
     gpu_ane_gauges = [gpu_gauge, ane_gauge]
 
     soc_info_dict = get_soc_info()
