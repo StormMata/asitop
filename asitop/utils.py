@@ -18,7 +18,7 @@ def parse_powermetrics(path='/tmp/asitop_powermetrics', timecode="0"):
         gpu_metrics_dict = parse_gpu_metrics(powermetrics_parse)
 
         # Extract CPU die temperature
-        temperature = powermetrics_parse.get("CPU die temperature", "N/A")
+        temperature = powermetrics_parse.get("CPU 0 die temp", "N/A")
 
         bandwidth_metrics = None
         timestamp = powermetrics_parse["timestamp"]
