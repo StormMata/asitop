@@ -125,6 +125,18 @@ def main():
     usage_gauges = ui.items[0]
     #bw_gauges = memory_gauges.items[1]
 
+    print("\n[3/3] Waiting for first reading...\n")
+
+    def get_reading(wait=0.1):
+        ready = parse_powermetrics(timecode=timecode)
+        while not ready:
+            time.sleep(wait)
+            ready = parse_powermetrics(timecode=timecode)
+        return ready
+
+    ready = get_reading()
+    last_timestamp = ready[-1]
+
     cpu_title = "".join([
         soc_info_dict["name"],
         " (cores: ",
@@ -155,18 +167,6 @@ def main():
 
     powermetrics_process = run_powermetrics_process(timecode,
                                                     interval=args.interval * 1000)
-
-    print("\n[3/3] Waiting for first reading...\n")
-
-    def get_reading(wait=0.1):
-        ready = parse_powermetrics(timecode=timecode)
-        while not ready:
-            time.sleep(wait)
-            ready = parse_powermetrics(timecode=timecode)
-        return ready
-
-    ready = get_reading()
-    last_timestamp = ready[-1]
 
     def get_avg(inlist):
         avg = sum(inlist) / len(inlist)
