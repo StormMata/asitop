@@ -144,6 +144,8 @@ def main():
     ready = get_reading()
     last_timestamp = ready[-1]
 
+    ready = parse_powermetrics(timecode=timecode)
+
     cpu_title = "".join([
         soc_info_dict["name"],
         " (cores: ",
