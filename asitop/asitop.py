@@ -155,9 +155,9 @@ def main():
         str(soc_info_dict["p_core_count"]),
         "P+",
         str(soc_info_dict["gpu_core_count"]),
-        "GPU)",
-        "    Thermal Pressure: ",
-        str({thermal_pressure})
+        "GPU);",
+        "   Thermal Pressure: ",
+        str(thermal_pressure)
     ])
     usage_gauges.title = cpu_title
     cpu_max_power = soc_info_dict["cpu_max_power"]
