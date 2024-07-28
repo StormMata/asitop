@@ -33,6 +33,7 @@ def main():
     ane_gauge = HGauge(title="ANE", val=0, color=args.color)
     # Add code to display thermal_pressure
     thermal_pressure_gauge = HGauge(title="Thermal Pressure: Loading...", val=0, color=args.color)
+    temperature_gauge = HGauge(title="Temperature: Loading...", val=0, color=args.color)  # New temperature gauge
     gpu_ane_gauges = [gpu_gauge, ane_gauge]
 
     soc_info_dict = get_soc_info()
@@ -53,11 +54,13 @@ def main():
                         cpu2_gauge,
                         *p_core_split,
                         *gpu_ane_gauges,
-                        thermal_pressure_gauge
+                        thermal_pressure_gauge,  # Add thermal pressure gauge here
+                        temperature_gauge  # Add temperature gauge here
                         ] if args.show_cores else [
         HSplit(cpu1_gauge, cpu2_gauge),
         HSplit(*gpu_ane_gauges),
-        thermal_pressure_gauge
+        thermal_pressure_gauge,  # Add thermal pressure gauge here
+        temperature_gauge  # Add temperature gauge here
     ]
     processor_split = VSplit(
         *processor_gauges,
@@ -186,7 +189,7 @@ def main():
                 count += 1
             ready = parse_powermetrics(timecode=timecode)
             if ready:
-                cpu_metrics_dict, gpu_metrics_dict, thermal_pressure, bandwidth_metrics, timestamp = ready
+                cpu_metrics_dict, gpu_metrics_dict, thermal_pressure, bandwidth_metrics, temperature, timestamp = ready
 
                 if timestamp > last_timestamp:
                     last_timestamp = timestamp
@@ -197,6 +200,7 @@ def main():
                         thermal_throttle = "YES"
 
                     thermal_pressure_gauge.title = f"Thermal Pressure: {thermal_pressure}"
+                    temperature_gauge.title = f"Temperature: {temperature} °C"  # Update temperature gauge title
                     
                     cpu1_gauge.title = "".join([
                         "E-CPU Usage: ",
