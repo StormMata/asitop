@@ -125,6 +125,13 @@ def main():
     usage_gauges = ui.items[0]
     #bw_gauges = memory_gauges.items[1]
 
+    print("\n[2/3] Starting powermetrics process\n")
+
+    timecode = str(int(time.time()))
+
+    powermetrics_process = run_powermetrics_process(timecode,
+                                                    interval=args.interval * 1000)
+
     print("\n[3/3] Waiting for first reading...\n")
 
     def get_reading(wait=0.1):
@@ -160,13 +167,6 @@ def main():
     cpu_peak_power = 0
     gpu_peak_power = 0
     package_peak_power = 0
-
-    print("\n[2/3] Starting powermetrics process\n")
-
-    timecode = str(int(time.time()))
-
-    powermetrics_process = run_powermetrics_process(timecode,
-                                                    interval=args.interval * 1000)
 
     def get_avg(inlist):
         avg = sum(inlist) / len(inlist)
