@@ -32,8 +32,8 @@ def main():
     gpu_gauge = HGauge(title="GPU Usage", val=0, color=args.color)
     ane_gauge = HGauge(title="ANE", val=0, color=args.color)
     # Add code to display thermal_pressure
-    thermal_pressure_gauge = HGauge(title="Thermal Pressure: Loading...", val=0, color=args.color)
-    temperature_gauge = HGauge(title="Temperature: Loading...", val=0, color=args.color)  # New temperature gauge
+    # thermal_pressure_gauge = HGauge(title="Thermal Pressure: Loading...", val=0, color=args.color)
+    # temperature_gauge = HGauge(title="Temperature: Loading...", val=0, color=args.color)  # New temperature gauge
     gpu_ane_gauges = [gpu_gauge, ane_gauge]
 
     soc_info_dict = get_soc_info()
@@ -54,13 +54,13 @@ def main():
                         cpu2_gauge,
                         *p_core_split,
                         *gpu_ane_gauges,
-                        thermal_pressure_gauge,  # Add thermal pressure gauge here
-                        temperature_gauge  # Add temperature gauge here
+                        #thermal_pressure_gauge,  # Add thermal pressure gauge here
+                        #temperature_gauge  # Add temperature gauge here
                         ] if args.show_cores else [
         HSplit(cpu1_gauge, cpu2_gauge),
         HSplit(*gpu_ane_gauges),
-        thermal_pressure_gauge,  # Add thermal pressure gauge here
-        temperature_gauge  # Add temperature gauge here
+        #thermal_pressure_gauge,  # Add thermal pressure gauge here
+        #temperature_gauge  # Add temperature gauge here
     ]
     processor_split = VSplit(
         *processor_gauges,
