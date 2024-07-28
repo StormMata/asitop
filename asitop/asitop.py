@@ -50,10 +50,12 @@ def main():
                         HSplit(*e_core_gauges),
                         cpu2_gauge,
                         *p_core_split,
-                        *gpu_ane_gauges
+                        *gpu_ane_gauges,
+                        thermal_pressure_gauge
                         ] if args.show_cores else [
         HSplit(cpu1_gauge, cpu2_gauge),
-        HSplit(*gpu_ane_gauges)
+        HSplit(*gpu_ane_gauges),
+        thermal_pressure_gauge
     ]
     processor_split = VSplit(
         *processor_gauges,
@@ -190,8 +192,13 @@ def main():
                     if thermal_pressure == "Nominal":
                         thermal_throttle = "no"
                     else:
-                        thermal_throttle = "yes"
+                        thermal_throttle = "YES"
 
+                    # Add code to display thermal_pressure
+                    thermal_pressure_gauge = HGauge(title=f"Thermal Pressure: {thermal_pressure}", val=0, color=args.color)
+
+                    thermal_pressure_gauge.title = f"Thermal Pressure: {thermal_pressure}"
+                    
                     cpu1_gauge.title = "".join([
                         "E-CPU Usage: ",
                         str(cpu_metrics_dict["E-Cluster_active"]),
