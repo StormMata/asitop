@@ -199,8 +199,9 @@ def main():
                     else:
                         thermal_throttle = "YES"
 
+                    # Update gauges
                     thermal_pressure_gauge.title = f"Thermal Pressure: {thermal_pressure}"
-                    temperature_gauge.title = f"Temperature: {temperature} °C"  # Update temperature gauge title
+                    temperature_gauge.title = f"Temperature: {temperature} °C" if temperature is not None else "Temperature: N/A"
                     
                     cpu1_gauge.title = "".join([
                         "E-CPU Usage: ",
