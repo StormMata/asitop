@@ -6,24 +6,21 @@ import psutil
 from .parsers import *
 import plistlib
 
-def parse_temperature(powermetrics_parse):
-    temperature_metrics = powermetrics_parse.get("temperature", {})
-    # Assuming temperature data is structured as follows; adjust as necessary
-    cpu_temperature = temperature_metrics.get("cpu", None)  # Modify based on actual structure
-    return cpu_temperature
-
 def parse_powermetrics(path='/tmp/asitop_powermetrics', timecode="0"):
     data = None
     try:
-        with open(path + timecode, 'rb') as fp:
+        with open(path+timecode, 'rb') as fp:
             data = fp.read()
         data = data.split(b'\x00')
         powermetrics_parse = plistlib.loads(data[-1])
         thermal_pressure = parse_thermal_pressure(powermetrics_parse)
         cpu_metrics_dict = parse_cpu_metrics(powermetrics_parse)
         gpu_metrics_dict = parse_gpu_metrics(powermetrics_parse)
+
+        # Extract CPU die temperature
+        temperature = powermetrics_parse.get("CPU die temperature", "N/A")
+
         bandwidth_metrics = None
-        temperature = parse_temperature(powermetrics_parse)  # Get temperature
         timestamp = powermetrics_parse["timestamp"]
         return cpu_metrics_dict, gpu_metrics_dict, thermal_pressure, bandwidth_metrics, temperature, timestamp
     except Exception as e:
@@ -33,12 +30,14 @@ def parse_powermetrics(path='/tmp/asitop_powermetrics', timecode="0"):
                 thermal_pressure = parse_thermal_pressure(powermetrics_parse)
                 cpu_metrics_dict = parse_cpu_metrics(powermetrics_parse)
                 gpu_metrics_dict = parse_gpu_metrics(powermetrics_parse)
+
+                # Extract CPU die temperature
+                temperature = powermetrics_parse.get("CPU die temperature", "N/A")
+
                 bandwidth_metrics = None
-                temperature = parse_temperature(powermetrics_parse)  # Get temperature
                 timestamp = powermetrics_parse["timestamp"]
                 return cpu_metrics_dict, gpu_metrics_dict, thermal_pressure, bandwidth_metrics, temperature, timestamp
         return False
-
 
 def clear_console():
     command = 'clear'
