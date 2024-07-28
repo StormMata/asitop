@@ -145,6 +145,7 @@ def main():
     last_timestamp = ready[-1]
 
     ready = parse_powermetrics(timecode=timecode)
+    cpu_metrics_dict, gpu_metrics_dict, thermal_pressure, bandwidth_metrics, temperature, timestamp = ready
 
     cpu_title = "".join([
         soc_info_dict["name"],
