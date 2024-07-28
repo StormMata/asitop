@@ -133,7 +133,7 @@ def get_gpu_cores():
 
 def get_soc_info():
 
-    thermal_pressure = parse_thermal_pressure(powermetrics_parse)
+    #thermal_pressure = parse_thermal_pressure(powermetrics_parse)
     
     cpu_info_dict = get_cpu_info()
     core_counts_dict = get_core_counts()
@@ -192,4 +192,4 @@ def get_soc_info():
     else:
         soc_info["cpu_max_bw"] = 70
         soc_info["gpu_max_bw"] = 70
-    return soc_info, thermal_pressure
+    return soc_info
